@@ -6,8 +6,6 @@ OBJDIR = bld
 
 sources = cyclictest.c \
 	  hackbench.c \
-	  pip_stress.c \
-	  pi_stress.c \
 	  pmqtest.c \
 	  ptsematest.c \
 	  rt-migrate-test.c \
@@ -42,7 +40,6 @@ ifeq (${PYLIB},)
 endif
 
 MANPAGES = src/cyclictest/cyclictest.8 \
-	   src/pi_tests/pi_stress.8 \
 	   src/ptsematest/ptsematest.8 \
 	   src/rt-migrate-test/rt-migrate-test.8 \
 	   src/sigwaittest/sigwaittest.8 \
@@ -50,7 +47,6 @@ MANPAGES = src/cyclictest/cyclictest.8 \
 	   src/pmqtest/pmqtest.8 \
 	   src/hackbench/hackbench.8 \
 	   src/signaltest/signaltest.8 \
-	   src/pi_tests/pip_stress.8 \
 	   src/queuelat/queuelat.8 \
 	   src/queuelat/determine_maximum_mpps.8 \
 	   src/sched_deadline/deadline_test.8 \
@@ -89,7 +85,6 @@ include src/arch/android/Makefile
 
 VPATH	= src/cyclictest:
 VPATH	+= src/signaltest:
-VPATH	+= src/pi_tests:
 VPATH	+= src/rt-migrate-test:
 VPATH	+= src/ptsematest:
 VPATH	+= src/sigwaittest:
@@ -130,9 +125,6 @@ deadline_test: $(OBJDIR)/deadline_test.o $(OBJDIR)/librttest.a
 signaltest: $(OBJDIR)/signaltest.o $(OBJDIR)/librttest.a $(OBJDIR)/librttestnuma.a
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $< $(LIBS) $(RTTESTLIB) $(RTTESTNUMA)
 
-pi_stress: $(OBJDIR)/pi_stress.o $(OBJDIR)/librttest.a
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $< $(LIBS) $(RTTESTLIB)
-
 hwlatdetect:  src/hwlatdetect/hwlatdetect.py
 	chmod +x src/hwlatdetect/hwlatdetect.py
 	ln -s src/hwlatdetect/hwlatdetect.py hwlatdetect
@@ -155,9 +147,6 @@ svsematest: $(OBJDIR)/svsematest.o $(OBJDIR)/librttest.a
 
 pmqtest: $(OBJDIR)/pmqtest.o $(OBJDIR)/librttest.a
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $< $(LIBS) $(RTTESTLIB) $(EXTRA_LIBS)
-
-pip_stress: $(OBJDIR)/pip_stress.o $(OBJDIR)/librttest.a
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $< $(LIBS) $(RTTESTLIB)
 
 hackbench: $(OBJDIR)/hackbench.o
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $< $(LIBS)
